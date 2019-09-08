@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: graphene-deployment # Label for the Deployment
+  name: graphene-deployment # Name of Deployment
+spec: # Deployment's specification
+  minReadySeconds: 60 # Number of seconds to wait after a Pod is created and its status is Ready
+  selector:
+    matchLabels:
+      run: graphene-deployment
+  template: # Pod template
+    metadata:
+      labels:
+        run: graphene-deployment # Labels Pods from this Deployment
+    spec: # Pod specification; each Pod created by this Deployment has this specification
+      containers:
+      - image: mohib13/graphene_with_coref:healthcheck  # Application to run in Deployment's Pods
+        name: graphene # Container name
+        resources:
+          requests:
+            memory: "2000Mi"
+      terminationGracePeriodSeconds: 60 # Number of seconds to wait for connections to terminate before shutting down Pods
